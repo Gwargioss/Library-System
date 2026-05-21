@@ -1,5 +1,7 @@
 package Customer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import Account.*;
 
 import java.io.Serializable;
@@ -9,7 +11,9 @@ import Borrower.*;
 import Cart.*;
 import Book.*;
 import Order.*;
+
 public  class Customer extends Account implements Serializable {
+    private static final Logger logger = LoggerFactory.getLogger(Customer.class);
     private static int totalCustomerCount = 0;
     private Cart cart;
     private List<Order> orderHistory;
@@ -41,10 +45,10 @@ public  class Customer extends Account implements Serializable {
 //        }
 //    }
     public boolean searchBooksByAuthor(List<Book> books, String author)throws SearchNotFound {
-        System.out.println("Searching for books by author: '" + author + "'");
+        logger.info("Searching for books by author: '{}'", author);
         for (Book book : books) {
             if (book.getAuthor().toLowerCase().contains(author.toLowerCase())) {
-                System.out.println("- " + book.getTitle());
+                logger.info("- {}", book.getTitle());
                 return true;
             }
         }
@@ -52,22 +56,22 @@ public  class Customer extends Account implements Serializable {
     }
 
     public void searchBooksByTitle(List<Book> books, String title) {
-        System.out.println("Searching for books with title: '" + title + "'");
+        logger.info("Searching for books with title: '{}'", title);
         boolean found = false;
         for (Book book : books) {
             if (book.getTitle().toLowerCase().contains(title.toLowerCase())) {
-                System.out.println("- " + book.getTitle());
+                logger.info("- {}", book.getTitle());
                 found = true;
             }
         }
         if (!found) {
-            System.out.println("No books found with title: '" + title + "'");
+            logger.info("No books found with title: '{}'", title);
         }
     }
 
     public void placeOrder() {
         if (cart.getItems().isEmpty()) {
-            System.out.println("Your cart is empty. Add books to the cart before placing an order.");
+            logger.info("Your cart is empty. Add books to the cart before placing an order.");
             return;
         }
 
@@ -78,14 +82,14 @@ public  class Customer extends Account implements Serializable {
         }
 
         Order order = new Order(orderItems, this.getAccount_Id ());
-        System.out.println("Order placed successfully.");
+        logger.info("Order placed successfully.");
         orderHistory.add(order);
         cart.clearCart();
     }
     public void displayBooksForPurchase(List<Book> books) {
-        System.out.println("Available Books for Purchase:");
+        logger.info("Available Books for Purchase:");
         for (Book book : books) {
-            System.out.println("Title: " + book.getTitle() + ", Price: " + book.getPrice() + ", Stock: " + book.getStock());
+            logger.info("Title: {}, Price: {}, Stock: {}", book.getTitle(), book.getPrice(), book.getStock());
         }
     }
 
@@ -141,7 +145,7 @@ public  class Customer extends Account implements Serializable {
         if (CardholderName.isEmpty() || CardNumber.length() < 13) {
             throw new PaymentFailedException("Invalid Credit Card Details. Payment Failed.");
         }
-        System.out.println("Payment Successful by Credit Card.");
+        logger.info("Payment Successful by Credit Card.");
     }
     public void OrderHistory()throws NoOrdersFound{
         if(orderHistory.isEmpty()){

@@ -1,6 +1,8 @@
 package Rating;
 
-public class Rating {
+import java.io.Serializable;
+
+public class Rating implements Serializable {
     private String RaterID ;
     private int RateNum;
     private String Review ;

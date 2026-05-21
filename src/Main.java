@@ -13,9 +13,21 @@ import Borrower.*;
 import Order.Order;
 
 public class Main  {
+    private static final Scanner scanner = new Scanner(System.in);
     public static Scanner Input(){
-        Scanner Input=new Scanner(System.in);
-        return Input;
+        return scanner;
+    }
+    public static int InputInt(){
+        while(true){
+            try{
+                int val = scanner.nextInt();
+                scanner.nextLine(); // consume leftover newline
+                return val;
+            }catch(java.util.InputMismatchException e){
+                System.out.println("Invalid input. Please enter a number:");
+                scanner.nextLine();
+            }
+        }
     }
     public static  void ReadingData(ArrayList<Account> Accounts,ArrayList<Book>Books){
         File file=new File("Details.ser");
@@ -70,7 +82,7 @@ public class Main  {
         int Choice;
         do {
             System.out.println("1-LOG IN" + '\t' + "2-SIGN UP" + '\t' + "3-EXIT");
-            Choice = Input().nextInt();
+            Choice = InputInt();
             if (Choice == 1) {
                 boolean LoggedIn;
                 do {
@@ -95,7 +107,7 @@ public class Main  {
                                         System.out.println("Dashboard");
                                         System.out.println("1-ADD USER" + '\t' + "2-UPDATE USER" + '\t' + "3-REMOVE USER" + '\n'
                                                 + "4-ADD BOOK" + '\t' + "5-UPDATE BOOK" + '\t' + "6-REMOVE BOOK");
-                                        int Choice2 = Input().nextInt();
+                                        int Choice2 = InputInt();
                                         switch (Choice2) {
 
                                             case 1: {
@@ -127,7 +139,7 @@ public class Main  {
                                                              InvalidPhoneNumber e) {
                                                         System.out.println(e.getMessage());
                                                         System.out.println("TRY AGAIN?" + '\n' + "1-YES" + '\t' + "2-NO");
-                                                        Choice3 = Input().nextInt();
+                                                        Choice3 = InputInt();
 
                                                     }
                                                 } while (Choice3 == 1 && !Success);
@@ -144,7 +156,7 @@ public class Main  {
                                                     int Choice7;
                                                     do {
                                                         System.out.println("1-USERNAME" + '\t' + "2-NAME" + '\t' + "3-E-MAIL" + '\t' + "4-PHONE NUMBER");
-                                                        int Choice3 = Input().nextInt();
+                                                        int Choice3 = InputInt();
                                                         switch (Choice3) {
                                                             case 1: {
                                                                 int Choice5;
@@ -162,7 +174,7 @@ public class Main  {
                                                                              SameUsernameException e) {
                                                                         System.out.println(e.getMessage());
                                                                         System.out.println("TRY AGAIN?" + '\n' + "1-YES" + '\t' + "2-NO");
-                                                                        Choice5 = Input().nextInt();
+                                                                        Choice5 = InputInt();
                                                                     }
 
                                                                 } while (Choice5 == 1 && !Success);
@@ -190,7 +202,7 @@ public class Main  {
                                                                     } catch (InvalidEmail e) {
                                                                         System.out.println(e.getMessage());
                                                                         System.out.println("TRY AGAIN?" + '\n' + "1-YES" + '\t' + "2-NO");
-                                                                        Choice5 = Input().nextInt();
+                                                                        Choice5 = InputInt();
                                                                     }
 
                                                                 } while (Choice5 == 1 && !Success);
@@ -211,14 +223,14 @@ public class Main  {
                                                                     } catch (InvalidPhoneNumber e) {
                                                                         System.out.println(e.getMessage());
                                                                         System.out.println("TRY AGAIN?" + '\n' + "1-YES" + '\t' + "2-NO");
-                                                                        Choice6 = Input().nextInt();
+                                                                        Choice6 = InputInt();
                                                                     }
                                                                 } while (Choice6 == 1 && !Success);
                                                                 break;
                                                             }
                                                         }
                                                         System.out.println("WOULD YOU LIKE TO UPDATE ANYTHING ELSE?" + '\n' + "1-YES" + '\t' + "2-NO");
-                                                        Choice7 = Input().nextInt();
+                                                        Choice7 = InputInt();
                                                     } while (Choice7 == 1);
                                                 } catch (CustomerNotFound e) {
                                                     System.out.println(e.getMessage());
@@ -246,7 +258,7 @@ public class Main  {
                                             }
                                         }
                                         System.out.println("ANOTHER OPERATION?" + '\n' + "1-YES" + '\t' + "2-NO");
-                                        Choice4 = Input().nextInt();
+                                        Choice4 = InputInt();
                                     } while (Choice4 == 1);
                                 } else if (user instanceof Customer) {
                                     Customer customer = (Customer) user;
@@ -263,12 +275,12 @@ public class Main  {
                                                 "9. Rate a Book\n" +
                                                 "10. Rate Us\n" +
                                                 "11.Log Out");
-                                        CustInput = Input().nextInt();
+                                        CustInput = InputInt();
                                         switch (CustInput) {
                                             case 1: {
                                                 System.out.println("1. by Author\n" +
                                                         "\t2. by title");
-                                                CustInput = Input().nextInt();
+                                                CustInput = InputInt();
                                                 switch (CustInput) {
                                                     case 1: {
                                                         do {
@@ -284,7 +296,7 @@ public class Main  {
                                                                 }
                                                             }while(CustInput==1);
                                                             System.out.println("DO ANOTHER SEARCH?" + '\n' + "1-YES" + '\t' + "2-NO");
-                                                            CustInput = Input().nextInt();
+                                                            CustInput = InputInt();
                                                         } while (CustInput == 1);
                                                         break;
                                                     }
@@ -302,7 +314,7 @@ public class Main  {
                                                                 }
                                                             }while(CustInput==1);
                                                             System.out.println("DO ANOTHER SEARCH?" + '\n' + "1-YES" + '\t' + "2-NO");
-                                                            CustInput = Input().nextInt();
+                                                            CustInput = InputInt();
                                                         } while (CustInput == 1);
                                                         break;
                                                     }
@@ -310,13 +322,14 @@ public class Main  {
 
                                                 }
                                             }
+                                            break;
                                             case 2: {
 
                                                 customer.displayBooksForPurchase(Books);
                                                 int PurchaseChoice;
                                                 do {
                                                     System.out.print("Add A Book To Cart? (1-YES, 2-NO): ");
-                                                    PurchaseChoice = Input().nextInt();
+                                                        PurchaseChoice = InputInt();
                                                     if (PurchaseChoice == 1) {
                                                         System.out.print("Enter the title of the book you want to add: ");
                                                         String title = Input().nextLine();
@@ -345,7 +358,7 @@ public class Main  {
                                                     System.out.println("4. Remove A Book Entirely From Cart");
                                                     System.out.println("5. Already Done Shopping");
                                                     System.out.println("6. View Cart");
-                                                    cartChoice = Input().nextInt();
+                                                    cartChoice = InputInt();
                                                     switch (cartChoice) {
                                                         case 1:
                                                             System.out.print("Enter the title of the book you want to add: ");
@@ -377,7 +390,7 @@ public class Main  {
 
                                                             if (book2 != null) {
                                                                 System.out.print("Enter the new quantity: ");
-                                                                int quantity = Input().nextInt();
+                                                                int quantity = InputInt();
                                                                 for(CartItem item:customer.getCart().getItems()){
                                                                     if(item.getBook().getTitle().equals(title2)){
                                                                         item.setQuantity(quantity);
@@ -419,12 +432,12 @@ public class Main  {
                                                                 System.out.println("1. Change Order Details");
                                                                 System.out.println("2. Cancel Order");
                                                                 System.out.println("3. Finish and Choose Payment Method");
-                                                                orderChoice = Input().nextInt();
+                                                                orderChoice = InputInt();
                                                                 switch (orderChoice) {
                                                                     case 1:
                                                                         System.out.println("1. Change Quantity for a Specific Order Item");
                                                                         System.out.println("2. Remove an Order Item");
-                                                                        int orderDetailChoice = Input().nextInt();
+                                                                        int orderDetailChoice = InputInt();
                                                                         switch (orderDetailChoice) {
                                                                             case 1:
                                                                                 System.out.print("Enter the title of the book you want to change quantity: ");
@@ -438,7 +451,7 @@ public class Main  {
                                                                                 }
                                                                                 if (book4 != null) {
                                                                                     System.out.print("Enter the new quantity: ");
-                                                                                    int quantity2 = Input().nextInt();
+                                                                                    int quantity2 = InputInt();
                                                                                     for(CartItem item:customer.getCart().getItems()){
                                                                                         if(item.getBook().getTitle().equals(title4)){
                                                                                             item.setQuantity(quantity2);
@@ -480,7 +493,7 @@ public class Main  {
                                                                             System.out.println("Payment Method: ");
                                                                             System.out.println("1. Cash");
                                                                             System.out.println("2. Credit Card");
-                                                                             paymentMethod = Input().nextInt();
+                                                                             paymentMethod = InputInt();
                                                                             switch (paymentMethod) {
                                                                                 case 1:
                                                                                     System.out.println("Please Prepare " + customer.getOrderHistory().getLast().getTotalAmount() + " For delivery Person");
@@ -542,7 +555,7 @@ public class Main  {
                                                             Temp_Transaction.getBookList().add(Temp_book);
                                                             System.out.println("The Book has been added successfully. ");
                                                             System.out.println("1. Add another book\n2. Complete Transaction\n3. Cancel Transaction");
-                                                             trans_choice = Input().nextInt();
+                                                             trans_choice = InputInt();
                                                             switch (trans_choice) {
                                                                 case 1: {
                                                                     // call the method of adding a new book
@@ -584,6 +597,7 @@ public class Main  {
                                                     }
                                                 }while(trans_choice==1);
                                             }
+                                            break;
                                             case 8:{
                                                 try {
                                                     customer.OrderHistory();
@@ -591,9 +605,11 @@ public class Main  {
                                                     System.out.println(e.getMessage());
                                                 }
                                             }
+                                            break;
                                             case 9:{
 
                                             }
+                                            break;
                                         }
                                     } while (CustInput != 11);
 
@@ -607,7 +623,7 @@ public class Main  {
                     } catch (IncorrectUsernameORPassword e) {
                         System.out.println(e.getMessage());
                         System.out.println("TRY AGAIN?" + '\n' + "1-YES" + '\t' + "2-NO");
-                        Choice = Input().nextInt();
+                        Choice = InputInt();
                     }
                 } while (!LoggedIn && Choice == 1);
             }
@@ -635,7 +651,7 @@ public class Main  {
                     } catch (UniqueUsernameException | PasswordException | InvalidEmail | InvalidPhoneNumber e) {
                         System.out.println(e.getMessage());
                         System.out.println("TRY AGAIN?" + '\n' + "1-YES" + '\t' + "2-NO");
-                        CustInput = Input().nextInt();
+                        CustInput = InputInt();
                     }
                 }while(CustInput==1);
             }

@@ -1,6 +1,12 @@
 package Cart;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import Book.*;
+
+import java.util.Objects;
 public class CartItem {
+    private static final Logger logger = LoggerFactory.getLogger(CartItem.class);
     private Book book;
     private int quantity;
 
@@ -18,7 +24,7 @@ public class CartItem {
             this.book = book;
             this.quantity = quantity;
         } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+            logger.error("Error: {}", e.getMessage());
         }
     }
 
@@ -39,7 +45,7 @@ public class CartItem {
             }
             this.quantity = quantity;
         } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+            logger.error("Error: {}", e.getMessage());
         }
     }
 

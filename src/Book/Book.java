@@ -1,12 +1,13 @@
 package Book;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 import Rating.*;
 
-public class Book {
+public class Book implements Serializable {
     private static final HashSet<String> usedBookIds = new HashSet<>();
     private final String bookId;
     private String title;

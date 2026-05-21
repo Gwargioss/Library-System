@@ -1,8 +1,12 @@
 package Cart;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.util.ArrayList;
 import Book.*;
 public class Cart implements Serializable {
+    private static final Logger logger = LoggerFactory.getLogger(Cart.class);
     private ArrayList<CartItem> items;
     public Cart() {
         items = new ArrayList<>();
@@ -21,7 +25,7 @@ public class Cart implements Serializable {
             if (item.getBook().getBookId().equals(book.getBookId()))
             {
                 item.setQuantity(item.getQuantity() + 1);
-                System.out.printf("Increased quantity of '%s' to %d.%n", book.getTitle(), item.getQuantity());
+                logger.info("Increased quantity of '{}' to {}.", book.getTitle(), item.getQuantity());
                 flag=true;
                 break;
             }
@@ -39,11 +43,11 @@ public class Cart implements Serializable {
         {
             if (item.getBook().getBookId().equals(book.getBookId())) {
                 items.remove(item);
-                System.out.printf("Removed '%s' from the cart.%n", book.getTitle());
+                logger.info("Removed '{}' from the cart.", book.getTitle());
                 break; //I used return instead of break to exit from the entire for each loop as soon as the condition is true
             }
         }
-        System.out.printf("Book '%s' not found in the cart.%n", book.getTitle());
+        logger.warn("Book '{}' not found in the cart.", book.getTitle());
     }
 
 
@@ -57,20 +61,20 @@ public class Cart implements Serializable {
 
     public void clearCart() {
         items.clear();
-        System.out.println("Cart has been cleared.");
+        logger.info("Cart has been cleared.");
     }
 
     public void displayCart() {
         if (items.isEmpty()) {
-            System.out.println("The cart is empty.");
+            logger.info("The cart is empty.");
             return;
         }
-        System.out.println("Items in the cart:");
+        logger.info("Items in the cart:");
         for (CartItem item : items) {
-            System.out.println(item);
+            logger.info(item.toString());
         }
-        System.out.printf("Total Price: $%.2f%n", calculateTotal());
-        System.out.printf("Total Items: %d%n", items.size());
+        logger.info("Total Price: ${}", String.format("%.2f", calculateTotal()));
+        logger.info("Total Items: {}", items.size());
     }
 
     public ArrayList<CartItem> getItems() {
